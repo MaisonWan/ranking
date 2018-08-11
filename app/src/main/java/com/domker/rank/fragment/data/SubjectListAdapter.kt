@@ -18,7 +18,9 @@ class SubjectListAdapter(private val context: Context) : RecyclerView.Adapter<Su
     /**
      * 学科列表
      */
-    private val subjectList: MutableList<SubjectData> = mutableListOf()
+    private val allSubjectList: MutableList<SubjectData> = mutableListOf()
+
+    private var showSubjectList: MutableList<SubjectData>
 
     init {
         val input = context.assets.open("subject.property")
@@ -27,11 +29,14 @@ class SubjectListAdapter(private val context: Context) : RecyclerView.Adapter<Su
         while (line != null) {
             val items = line.split(" ")
             if (items.size == 3) {
-                subjectList.add(SubjectData(items[0], items[1], items[2]))
+                allSubjectList.add(SubjectData(items[0], items[1], items[2]))
             }
             line = reader.readLine()
         }
         reader.close()
+        // 默认都显示
+        showSubjectList = mutableListOf()
+        showSubjectList.addAll(allSubjectList)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SubjectViewHolder {
@@ -42,11 +47,11 @@ class SubjectListAdapter(private val context: Context) : RecyclerView.Adapter<Su
     }
 
     override fun getItemCount(): Int {
-        return subjectList.size
+        return showSubjectList.size
     }
 
     override fun onBindViewHolder(holder: SubjectViewHolder, position: Int) {
-        val subject = subjectList[position]
+        val subject = showSubjectList[position]
         holder.nameTextView?.text = subject.name
         holder.typeTextView?.text = subject.type
         holder.iconTextView?.text = subject.name[0].toString()
@@ -57,6 +62,22 @@ class SubjectListAdapter(private val context: Context) : RecyclerView.Adapter<Su
             context.startActivity(intent)
         }
 
+    }
+
+    /**
+     * 使用搜索词过滤
+     */
+    fun searchSubject(query: String?) {
+        showSubjectList.clear()
+        if (query.isNullOrBlank()) {
+            showSubjectList.addAll(allSubjectList)
+        } else {
+            allSubjectList.filter {
+                it.name.contains(query!!)
+            }.forEach {
+                showSubjectList.add(it)
+            }
+        }
     }
 
     class SubjectViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {

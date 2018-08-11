@@ -1,5 +1,6 @@
 package com.domker.rank.fragment
 
+import android.annotation.SuppressLint
 import android.app.Fragment
 import android.content.Context
 import android.net.Uri
@@ -13,6 +14,11 @@ import com.domker.rank.R
 import com.domker.rank.fragment.data.SubjectListAdapter
 import kotlinx.android.synthetic.main.fragment_subject.*
 import android.support.v7.widget.DividerItemDecoration
+import android.view.inputmethod.InputMethodManager
+import android.widget.SearchView
+import android.view.inputmethod.InputMethodManager.HIDE_NOT_ALWAYS
+import android.view.inputmethod.InputMethodManager.SHOW_IMPLICIT
+
 
 
 
@@ -26,17 +32,42 @@ class SubjectFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
+        forceOpenSoftKeyboard(activity)
         return inflater.inflate(R.layout.fragment_subject, container, false)
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        subjectListAdapter = SubjectListAdapter(activity)
+        subjectRecyclerView.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
+        subjectRecyclerView.layoutManager = LinearLayoutManager(activity)
     }
 
     override fun onResume() {
         super.onResume()
         activity.title = getString(R.string.title_subject)
 
-        subjectListAdapter = SubjectListAdapter(activity)
-        subjectRecyclerView.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
-        subjectRecyclerView.layoutManager = LinearLayoutManager(activity)
         subjectRecyclerView.adapter = subjectListAdapter
+
+        searchViewSubject.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return query.isNullOrBlank()
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                subjectListAdapter.searchSubject(newText)
+                subjectListAdapter.notifyDataSetChanged()
+                return newText.isNullOrBlank()
+            }
+
+        })
+    }
+
+
+    @SuppressLint("ServiceCast")
+    private fun forceOpenSoftKeyboard(context: Context) {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, InputMethodManager.HIDE_NOT_ALWAYS)
     }
 
     fun onButtonPressed(uri: Uri) {

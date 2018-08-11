@@ -7,10 +7,11 @@
     tools:context=".fragment.SubjectFragment">
 
     <SearchView
+        android:id="@+id/searchViewSubject"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="right"
-        android:queryHint="@string/title_subject" />
+        android:layout_gravity="end"
+        android:queryHint="@string/hint_subject_name" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/subjectRecyclerView"
