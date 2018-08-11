@@ -3,7 +3,7 @@ package com.domker.rank.utils
 import android.content.Context
 
 object UI {
-    fun dip2px(context: Context, dipValue: Float): Int {
+    fun dip2px(context: Context, dipValue: Int): Int {
         val scale = context.resources.displayMetrics.density
         return (dipValue * scale + 0.5f).toInt()
     }

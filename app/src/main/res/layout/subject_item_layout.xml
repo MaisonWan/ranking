@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="100dp">
+    android:layout_height="@dimen/item_height"
+    android:orientation="horizontal"
+    android:clickable="true"
+    android:background="@drawable/touchedbackground"
+    android:focusable="true">
 
     <TextView
         android:id="@+id/textViewIcon"
-        android:layout_width="100dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:gravity="center"
-        android:text="TextView" />
+        android:layout_margin="5dp"
+        android:text="T"
+        android:textSize="30sp"
+        android:textColor="@color/white"
+        android:background="@drawable/name_bg"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,13 +27,21 @@
         <TextView
             android:id="@+id/textViewSubject"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="0dp"
+            android:layout_weight="7"
+            android:gravity="center_vertical"
+            android:paddingLeft="5dp"
+            android:textSize="18sp"
             android:text="TextView" />
 
         <TextView
             android:id="@+id/textViewType"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:text="TextView" />
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            android:gravity="center_vertical"
+            android:paddingLeft="5dp"
+            android:text="TextView"
+            android:textSize="12sp" />
     </LinearLayout>
 </LinearLayout>
