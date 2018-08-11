@@ -4,7 +4,8 @@
     <string name="title_subject">专业排名</string>
     <string name="hint_subject_name">专业名称</string>
     <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_info">关于</string>
+    <string name="copyright">©2018 Domker. All rights reserved. </string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

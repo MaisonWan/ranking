@@ -5,21 +5,16 @@ import android.app.Fragment
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
+import android.view.inputmethod.InputMethodManager
+import android.widget.SearchView
 import com.domker.rank.R
 import com.domker.rank.fragment.data.SubjectListAdapter
 import kotlinx.android.synthetic.main.fragment_subject.*
-import android.support.v7.widget.DividerItemDecoration
-import android.view.inputmethod.InputMethodManager
-import android.widget.SearchView
-import android.view.inputmethod.InputMethodManager.HIDE_NOT_ALWAYS
-import android.view.inputmethod.InputMethodManager.SHOW_IMPLICIT
-
-
 
 
 /**
@@ -32,7 +27,6 @@ class SubjectFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        forceOpenSoftKeyboard(activity)
         return inflater.inflate(R.layout.fragment_subject, container, false)
     }
 
@@ -41,13 +35,12 @@ class SubjectFragment : Fragment() {
         subjectListAdapter = SubjectListAdapter(activity)
         subjectRecyclerView.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
         subjectRecyclerView.layoutManager = LinearLayoutManager(activity)
+        subjectRecyclerView.adapter = subjectListAdapter
     }
 
     override fun onResume() {
         super.onResume()
         activity.title = getString(R.string.title_subject)
-
-        subjectRecyclerView.adapter = subjectListAdapter
 
         searchViewSubject.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -61,13 +54,6 @@ class SubjectFragment : Fragment() {
             }
 
         })
-    }
-
-
-    @SuppressLint("ServiceCast")
-    private fun forceOpenSoftKeyboard(context: Context) {
-        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, InputMethodManager.HIDE_NOT_ALWAYS)
     }
 
     fun onButtonPressed(uri: Uri) {

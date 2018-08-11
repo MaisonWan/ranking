@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
+import com.domker.rank.fragment.AboutFragment
 import com.domker.rank.fragment.MainFragment
 import com.domker.rank.fragment.OnFragmentInteractionListener
 import com.domker.rank.fragment.SubjectFragment
@@ -13,6 +14,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity(), OnFragmentInteractionListener {
     private lateinit var mainFragment: MainFragment
     private lateinit var subjectFragment: SubjectFragment
+    private lateinit var aboutFragment: AboutFragment
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
@@ -25,7 +27,7 @@ class MainActivity : AppCompatActivity(), OnFragmentInteractionListener {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_notifications -> {
-//                message.setText(R.string.title_notifications)
+                showFragment(aboutFragment)
                 return@OnNavigationItemSelectedListener true
             }
         }
@@ -35,6 +37,7 @@ class MainActivity : AppCompatActivity(), OnFragmentInteractionListener {
     private fun initFragment() {
         mainFragment = MainFragment()
         subjectFragment = SubjectFragment()
+        aboutFragment = AboutFragment()
     }
 
     /**
