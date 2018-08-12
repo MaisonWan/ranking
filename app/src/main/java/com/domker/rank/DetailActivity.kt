@@ -2,13 +2,12 @@ package com.domker.rank
 
 import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.detail_layout.*
 
 /**
  * 详情页信息
  */
-class DetailActivity: AppCompatActivity() {
+class DetailActivity: BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

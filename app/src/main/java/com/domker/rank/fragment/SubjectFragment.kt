@@ -1,6 +1,5 @@
 package com.domker.rank.fragment
 
-import android.annotation.SuppressLint
 import android.app.Fragment
 import android.content.Context
 import android.net.Uri
@@ -10,9 +9,9 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import android.widget.SearchView
 import com.domker.rank.R
+import com.domker.rank.fragment.data.RankEvent
 import com.domker.rank.fragment.data.SubjectListAdapter
 import kotlinx.android.synthetic.main.fragment_subject.*
 
@@ -44,12 +43,15 @@ class SubjectFragment : Fragment() {
 
         searchViewSubject.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
+                if (!query.isNullOrBlank()) {
+                    RankEvent.onSearch(activity, query!!)
+                }
                 return query.isNullOrBlank()
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 subjectListAdapter.searchSubject(newText)
-                subjectListAdapter.notifyDataSetChanged()
+                subjectListAdapter.notifyDiffData()
                 return newText.isNullOrBlank()
             }
 
